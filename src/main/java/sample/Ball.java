@@ -3,7 +3,7 @@ package sample;
 public class Ball {
 
     private final double radius;
- private Position ballPosition;
+    private Position ballPosition;
 
     public Position getBallPosition() {
         return ballPosition;

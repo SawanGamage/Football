@@ -1,8 +1,11 @@
 package sample;
 
+import static javafx.scene.input.KeyCode.X;
+import static javafx.scene.input.KeyCode.Y;
+
 public class Position {
-    private double x=0;
-    private double y=0;
+    private double x = 0;
+    private double y = 0;
 
     public Position(double x, double y) {
         this.x = x;
@@ -25,5 +28,8 @@ public class Position {
         this.y = y;
     }
 
+    public String printPosition() {
+        return "[" + x + "," + y + "]";
+    }
 
 }

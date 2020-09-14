@@ -5,7 +5,6 @@ public class GallCourt {
     private int width;
     private Position gcPosition;
 
-
     public Position getgcPosition() {
         return gcPosition;
     }
@@ -18,6 +17,5 @@ public class GallCourt {
         this.length = length;
         this.width = width;
         this.gcPosition = gcPosition;
-
     }
 }

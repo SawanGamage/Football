@@ -4,7 +4,6 @@ public class Panel {
 
     int score;
 
-
     static void start() {
 
     }
@@ -20,5 +19,4 @@ public class Panel {
     static void reset() {
 
     }
-
 }
