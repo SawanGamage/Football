@@ -63,41 +63,57 @@ public class Player {
     public void runOrKick() {
         //measure distance between ball and players
 
-        System.out.println(this.name + " player position :" + this.playerPosition.printPosition());
-        System.out.println(("ball position : ") + this.ball.getBallPosition().printPosition());
+//        System.out.println(this.name + " player position :" + this.playerPosition.printPosition());
+//        System.out.println(("ball position : ") + this.ball.getBallPosition().printPosition());
+        Position initialPlayerPosition = playerPosition.clone();
+        Position initialBallPosition = ball.getBallPosition().clone();
 
         double playerBallDistance = calcDistance(this.ball.getBallPosition(), this.playerPosition);
-
         double targetGoalBallDistance = calcDistance(this.gallCourt.getgcPosition(), this.ball.getBallPosition());
 
-        System.out.println(this.name + " Player and ball distance : " + playerBallDistance);
+//        System.out.println(this.name + " Player and ball distance : " + playerBallDistance);
         // if ball is to far run to the ball,
         //step1: if ball is far away than 5m, run 5m
         //step2: if distance is less than 5m, go 4m near
+        boolean isRunning = false;
+        boolean longDistance = false;
+        boolean longBallDistance = false;
         if (playerBallDistance > 1) {
-            System.out.println(this.name + "player is running");
+            isRunning = true;
+//            System.out.println(this.name + "player is running");
             if (playerBallDistance <= 4) {
-                System.out.println(this.name + "player is short distance running");
+                longDistance = false;
+//                System.out.println(this.name + "player is short distance running");
                 setPlayerPosition(this.ball.getBallPosition());
             } else {
-                System.out.println(this.name + "player is long distance running");
+                longDistance = true;
+//                System.out.println(this.name + "player is long distance running");
                 Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), 4);
                 setPlayerPosition(newPlayerPosition);
             }
-        }// else {
-        // if distance is less than 1 m, he kick to the ball towards the middle of the goal
-        if (playerBallDistance <= 1) {
-            System.out.println(this.name + "player is eligible for ball kicking");
+        } else {
+            isRunning = false;
+//            System.out.println(this.name + "player is eligible for ball kicking");
             if (targetGoalBallDistance <= 8) {
-                System.out.println( "ball move to the gallcourt");
+                longBallDistance = false;
+//                System.out.println("ball move to the gallcourt");
                 ball.setBallPosition(this.gallCourt.getgcPosition());
             } else {
-                System.out.println(this.name + "Kick to the ball");
+                longBallDistance = true;
+//                System.out.println(this.name + "Kick to the ball");
                 Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), 8);
                 ball.setBallPosition(newBallPosition);
-                System.out.println(this.name + "After ball kicking new position :" + this.ball.getBallPosition().printPosition());
+//                System.out.println(this.name + "After ball kicking new position :" + this.ball.getBallPosition().printPosition());
             }
         }
+
+        String summery = "Player: " + name + " on " + initialPlayerPosition.printPosition() + " sees ball at " + initialBallPosition.printPosition() + " and" +
+                " distance to ball is " + playerBallDistance + "\n" +
+                (isRunning ? "He decided to take " + (longDistance ? "long" : "short") + " run" : "he decided to take " + (longBallDistance ? "long" : "short") + " kick to the ball.") +
+                (isRunning ? " and palyer's end position is " + playerPosition.printPosition() : " and ball end position is " + ball.getBallPosition().printPosition());
+        System.out.println(summery);
+
+
     }
 
     public Position calcPosition(Position initialPosition, Position endPosition, double movement) {
