@@ -75,18 +75,28 @@ public class Player {
         //step1: if ball is far away than 5m, run 5m
         //step2: if distance is less than 5m, go 4m near
         if (playerBallDistance > 1) {
-
-            Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), 4);
-            setPlayerPosition(newPlayerPosition);
             System.out.println(this.name + "player is running");
-
-
+            if (playerBallDistance <= 4) {
+                System.out.println(this.name + "player is short distance running");
+                setPlayerPosition(this.ball.getBallPosition());
+            } else {
+                System.out.println(this.name + "player is long distance running");
+                Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), 4);
+                setPlayerPosition(newPlayerPosition);
+            }
         }// else {
         // if distance is less than 1 m, he kick to the ball towards the middle of the goal
         if (playerBallDistance <= 1) {
             System.out.println(this.name + "player is eligible for ball kicking");
-            Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), 8);
-            ball.setBallPosition(newBallPosition);
+            if (targetGoalBallDistance <= 8) {
+                System.out.println( "ball move to the gallcourt");
+                ball.setBallPosition(this.gallCourt.getgcPosition());
+            } else {
+                System.out.println(this.name + "Kick to the ball");
+                Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), 8);
+                ball.setBallPosition(newBallPosition);
+                System.out.println(this.name + "After ball kicking new position :" + this.ball.getBallPosition().printPosition());
+            }
         }
     }
 
@@ -130,8 +140,7 @@ public class Player {
             double newX = Math.sqrt(Math.pow(movement, 2) / (Math.pow((y3 - y1) / (x3 - x1), 2) + 1)) + x1;
             double newY = y1 - Math.sqrt(Math.pow(movement, 2) / (Math.pow((x3 - x1) / (y3 - y1), 2) + 1));
             return new Position(newX, newY);
-        }
-        else {
+        } else {
             double newX = Math.sqrt(Math.pow(movement, 2) / (Math.pow((y3 - y1) / (x3 - x1), 2) + 1)) + x1;
             double newY = Math.sqrt(Math.pow(movement, 2) / (Math.pow((x3 - x1) / (y3 - y1), 2) + 1)) + y1;
             return new Position(newX, newY);

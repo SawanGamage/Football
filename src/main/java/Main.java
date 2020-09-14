@@ -16,7 +16,7 @@ public class Main {
         Position spotPosition = new Position(35, 22);
         CenterSpot spot = new CenterSpot(6, spotPosition);
 
-        Position ballPosition = new Position(35, 22);
+        Position ballPosition = new Position(15, 25);
         Ball ball = new Ball(0, ballPosition);
 
         Ground ground = new Ground(70, 44, gcLeft, gcRight, spot, ball);
@@ -25,7 +25,7 @@ public class Main {
         Team teamRed  = new Team();
 
         Player playerBlue = new Player("Blue");
-        Position playerBluePosition = new Position(55, 22);
+        Position playerBluePosition = new Position(32, 22);
         playerBlue.setPlayerPosition(playerBluePosition);
         playerBlue.setGround(ground);
         playerBlue.setBall(ball);
