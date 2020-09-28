@@ -1,4 +1,5 @@
 import backend.people.Player;
+import frontend.Game;
 import sample.Position;
 import backend.people.Team;
 import sample.*;
@@ -23,6 +24,9 @@ public class Main {
 
         Team teamBlue = new Team();
         Team teamRed  = new Team();
+
+        Game game =new Game("Foot Ball Game", 900, 600);
+        game.start();
 
         Player playerBlue = new Player("Blue");
         Position playerBluePosition = new Position(32, 22);

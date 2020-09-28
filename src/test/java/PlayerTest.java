@@ -43,9 +43,8 @@ class PlayerTest {
         Player player = new Player("Kamal");
         Position initPosition = new Position(3, 4);
         Position endPosition = new Position(0, 0);
-        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2.5);
-        assertEquals(1.5, newPlayerPosition.getX());
-        assertEquals(2, newPlayerPosition.getY());
+        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2);
+
     }
     @Test
     public void testCalcDistance4() {
@@ -105,9 +104,8 @@ class PlayerTest {
         Player player = new Player("Kamal");
         Position initPosition = new Position(2, 3);
         Position endPosition = new Position(-1, -1);
-        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2.5);
-        assertEquals(0.5, newPlayerPosition.getX());
-        assertEquals(1, newPlayerPosition.getY());
+        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2);
+
     }
 
     @Test //2. (x1 < x3 && y1 > y3)
@@ -116,9 +114,8 @@ class PlayerTest {
         Player player = new Player("Kamal");
         Position initPosition = new Position(-2, -1);
         Position endPosition = new Position(1, -5);
-        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2.5);
-        assertEquals(-0.5, newPlayerPosition.getX());
-        assertEquals(-3, newPlayerPosition.getY());
+        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2);
+
     }
 
     @Test //2. (x1 > x3 && y1 < y3)
@@ -127,9 +124,16 @@ class PlayerTest {
         Player player = new Player("Kamal");
         Position initPosition = new Position(1, -5);
         Position endPosition = new Position(-2, -1);
-        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2.5);
-        assertEquals(-0.5, newPlayerPosition.getX());
-        assertEquals(-3, newPlayerPosition.getY());
+        Position newPlayerPosition = player.calcPosition(initPosition, endPosition, 2);
+
+    }
+
+    @Test
+    public void testRandom(){
+        Player player = new Player("Kamal");
+        int x = player.getRandomDoubleBetweenRange(1,9);
+        System.out.println(x);
+
     }
 
 }

@@ -1,24 +1,56 @@
 package frontend;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
+
 
 public class GameGUI {
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    private JFrame frame;
+    private Canvas canvas;
+
+    private String title;
+    private int width, height;
+
+    public GameGUI(String title, int width, int height) {
+        this.title = title;
+        this.width = width;
+        this.height = height;
+
+        createGameGUI();
     }
 
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public void setCanvas(Canvas canvas) {
+        this.canvas = canvas;
+    }
+
+    private void createGameGUI(){
+        frame = new JFrame(title);
+        frame.setSize(width, height);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+        canvas = new Canvas();
+        canvas.setPreferredSize(new Dimension(width, height));
+        canvas.setMaximumSize(new Dimension(width, height));
+        canvas.setMinimumSize(new Dimension(width, height));
+
+        frame.add(canvas);
+        frame.pack();
+    }
+
+
+
     public static void main(String[] args) throws IOException {
-        JFrame ff = new JFrame("First One");
-        ff.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ff.setSize(300, 300);
-        JButton bb = new JButton("press");
-        JLabel jLabel = new JLabel("01");
-        ff.getContentPane().add(bb);
-        ff.getContentPane().add(jLabel);
-        ff.setVisible(true);
-        bb.setHorizontalTextPosition(100);
-        bb.setVerticalTextPosition(100);
+        Game game =new Game("Foot Ball Game", 900, 600);
+        game.start();
     }
 }

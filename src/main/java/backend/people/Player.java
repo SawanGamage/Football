@@ -62,61 +62,50 @@ public class Player {
 
     public void runOrKick() {
         //measure distance between ball and players
-
-//        System.out.println(this.name + " player position :" + this.playerPosition.printPosition());
-//        System.out.println(("ball position : ") + this.ball.getBallPosition().printPosition());
         Position initialPlayerPosition = playerPosition.clone();
         Position initialBallPosition = ball.getBallPosition().clone();
 
         double playerBallDistance = calcDistance(this.ball.getBallPosition(), this.playerPosition);
         double targetGoalBallDistance = calcDistance(this.gallCourt.getgcPosition(), this.ball.getBallPosition());
 
-//        System.out.println(this.name + " Player and ball distance : " + playerBallDistance);
         // if ball is to far run to the ball,
         //step1: if ball is far away than 5m, run 5m
         //step2: if distance is less than 5m, go 4m near
         boolean isRunning = false;
-        boolean longDistance = false;
+        boolean longPlayerDistance = false;
         boolean longBallDistance = false;
         if (playerBallDistance > 1) {
             isRunning = true;
-//            System.out.println(this.name + "player is running");
             if (playerBallDistance <= 4) {
-                longDistance = false;
-//                System.out.println(this.name + "player is short distance running");
+                longPlayerDistance = false;
                 setPlayerPosition(this.ball.getBallPosition());
             } else {
-                longDistance = true;
-//                System.out.println(this.name + "player is long distance running");
-                Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), 4);
+                longPlayerDistance = true;
+
+                Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), getRandomDoubleBetweenRange(0, 4));
                 setPlayerPosition(newPlayerPosition);
+
             }
         } else {
             isRunning = false;
-//            System.out.println(this.name + "player is eligible for ball kicking");
             if (targetGoalBallDistance <= 8) {
                 longBallDistance = false;
-//                System.out.println("ball move to the gallcourt");
                 ball.setBallPosition(this.gallCourt.getgcPosition());
             } else {
                 longBallDistance = true;
-//                System.out.println(this.name + "Kick to the ball");
-                Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), 8);
+                Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), getRandomDoubleBetweenRange(0, 9));
                 ball.setBallPosition(newBallPosition);
-//                System.out.println(this.name + "After ball kicking new position :" + this.ball.getBallPosition().printPosition());
             }
         }
 
         String summery = "Player: " + name + " on " + initialPlayerPosition.printPosition() + " sees ball at " + initialBallPosition.printPosition() + " and" +
                 " distance to ball is " + playerBallDistance + "\n" +
-                (isRunning ? "He decided to take " + (longDistance ? "long" : "short") + " run" : "he decided to take " + (longBallDistance ? "long" : "short") + " kick to the ball.") +
-                (isRunning ? " and palyer's end position is " + playerPosition.printPosition() : " and ball end position is " + ball.getBallPosition().printPosition());
+                (isRunning ? "He decided to take " + (longPlayerDistance ? "long" : "short") + " run" : "he decided to take " + (longBallDistance ? "long" : "short") + " kick to the ball.") +
+                (isRunning ? " and palyer's end position is " + getPlayerPosition().printPosition() : " and ball end position is " + ball.getBallPosition().printPosition() + "and" +
+                        " distance to gall is " + targetGoalBallDistance);
         System.out.println(summery);
-
-
     }
-
-    public Position calcPosition(Position initialPosition, Position endPosition, double movement) {
+    public Position calcPosition(Position initialPosition, Position endPosition, int movement) {
         double x1 = initialPosition.getX();
         double y1 = initialPosition.getY();
         double x3 = endPosition.getX();
@@ -170,7 +159,12 @@ public class Player {
         double x2 = endPosition.getX();
         double y2 = endPosition.getY();
         double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-        return distance;
+        return (Math.round(distance * 100.0) / 100.0);
+    }
+    public static int getRandomDoubleBetweenRange(int min, int max) {
+
+        int x = (int) Math.round ((Math.random() * ((max - min) + 1)) + min);
+        return x;
     }
 
 }
