@@ -1,8 +1,8 @@
-package sample;
+package backend.objects;
+
+import backend.shared.Position;
 
 public class Ball {
-
-    private final double radius;
     private Position ballPosition;
 
     public Position getBallPosition() {
@@ -13,8 +13,7 @@ public class Ball {
         this.ballPosition = ballPosition;
     }
 
-    public Ball(double radius, Position ballPosition) {
-        this.radius = radius;
+    public Ball(Position ballPosition) {
         this.ballPosition = ballPosition;
     }
 }

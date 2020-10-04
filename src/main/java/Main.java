@@ -1,63 +1,44 @@
-import backend.people.Player;
-import frontend.Game;
-import sample.Position;
-import backend.people.Team;
-import sample.*;
+import backend.BackEndServer;
+import datatransfer.PositionData;
+import frontend.FrontEndApplication;
 
 public class Main {
+    private static final int GROUND_WIDTH = 700;
+    private static final int GROUND_HEIGHT = 440;
+    private static final int PANALTY_COURT_WIDTH = 110;
+    private static final int PANALTY_COURT_HEIGHT = 260;
+    private static final int GALL_COURT_WIDTH = 40;
+    private static final int GALL_COURT_HEIGHT = 120;
+    private static final int CENTER_CIRCLE_RADIOUS = 60;
+    private static final int DOT_RADIOUS = 5;
+
+    private static FrontEndApplication frontEndApplication;
+    private static BackEndServer backEndServer;
 
     public static void main(String[] args) {
+        //initiate frontend and back end
+        backEndServer = new BackEndServer(GROUND_WIDTH, GROUND_HEIGHT);
+        backEndServer.initServer();
+        frontEndApplication = new FrontEndApplication(GROUND_WIDTH, GROUND_HEIGHT,
+                PANALTY_COURT_WIDTH, PANALTY_COURT_HEIGHT,
+                GALL_COURT_WIDTH, GALL_COURT_HEIGHT,
+                CENTER_CIRCLE_RADIOUS, DOT_RADIOUS,
+                "FooBall Game Simulation");
 
-        Position gcLeftPosition = new Position(2, 22);
-        GallCourt gcLeft = new GallCourt(6, 4, gcLeftPosition);
-
-        Position gcRightPosition = new Position(68, 22);
-        GallCourt gcRight = new GallCourt(6, 4, gcRightPosition);
-
-        Position spotPosition = new Position(35, 22);
-        CenterSpot spot = new CenterSpot(6, spotPosition);
-
-        Position ballPosition = new Position(15, 25);
-        Ball ball = new Ball(0, ballPosition);
-
-        Ground ground = new Ground(70, 44, gcLeft, gcRight, spot, ball);
-
-        Team teamBlue = new Team();
-        Team teamRed  = new Team();
-
-        Game game =new Game("Foot Ball Game", 900, 600);
-        game.start();
-
-        Player playerBlue = new Player("Blue");
-        Position playerBluePosition = new Position(32, 22);
-        playerBlue.setPlayerPosition(playerBluePosition);
-        playerBlue.setGround(ground);
-        playerBlue.setBall(ball);
-        playerBlue.setTeam(teamBlue);
-        playerBlue.setGallCourt(gcRight);
-        System.out.println("Player Name: "+playerBlue.getName());
-        System.out.println("Start Position: "+ playerBlue.getPlayerPosition().printPosition());
-
-        Player playerRed = new Player("Red");
-        Position playerRedPosition = new Position(38, 22);
-        playerRed.setPlayerPosition(playerRedPosition);
-        playerRed.setGround(ground);
-        playerRed.setBall(ball);
-        playerRed.setTeam(teamRed);
-        playerRed.setGallCourt(gcLeft);
-        System.out.println("Player Name: "+playerRed.getName());
-        System.out.println("Start Position: "+ playerRed.getPlayerPosition().printPosition());
-        // game start
-        while (!ground.isGallHit) {
-            playerRed.runOrKick();
-            if (ground.evaluate()) {
-                continue;
+        //run system
+        Thread t = new Thread(new Runnable() {
+            public void run() {
+                while (!backEndServer.isGameOver()) {
+                    //front end is running for a while
+                    frontEndApplication.redrawGUI();
+                    //backend is running for a while
+                    backEndServer.processData();
+                    //backend server sends data to frontend application
+                    PositionData positionData = backEndServer.sendNewCoordinates();
+                    frontEndApplication.updateLocations(positionData);
+                }
             }
-            playerBlue.runOrKick();
-            if (ground.evaluate()) {
-                continue;
-            }
-        }
-        System.out.println("game finished");
+        });
+        t.start();
     }
 }

@@ -6,21 +6,18 @@ import java.io.IOException;
 
 
 public class GameGUI {
-
     private JFrame frame;
     private Canvas canvas;
-
     private String title;
-    private int width, height;
+    private int width;
+    private int height;
 
     public GameGUI(String title, int width, int height) {
         this.title = title;
         this.width = width;
         this.height = height;
-
         createGameGUI();
     }
-
 
     public Canvas getCanvas() {
         return canvas;
@@ -30,7 +27,7 @@ public class GameGUI {
         this.canvas = canvas;
     }
 
-    private void createGameGUI(){
+    private void createGameGUI() {
         frame = new JFrame(title);
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,12 +42,5 @@ public class GameGUI {
 
         frame.add(canvas);
         frame.pack();
-    }
-
-
-
-    public static void main(String[] args) throws IOException {
-        Game game =new Game("Foot Ball Game", 900, 600);
-        game.start();
     }
 }

@@ -1,11 +1,8 @@
-package sample;
-
-import static javafx.scene.input.KeyCode.X;
-import static javafx.scene.input.KeyCode.Y;
+package backend.shared;
 
 public class Position implements Cloneable {
-    private double x = 0;
-    private double y = 0;
+    private double x;
+    private double y;
 
     public Position(double x, double y) {
         this.x = x;

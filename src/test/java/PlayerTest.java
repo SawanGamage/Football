@@ -1,6 +1,6 @@
 import backend.people.Player;
 import org.junit.jupiter.api.Test;
-import sample.Position;
+import backend.shared.Position;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

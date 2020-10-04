@@ -1,8 +1,8 @@
-package sample;
+package backend.objects;
+
+import backend.shared.Position;
 
 public class GallCourt {
-    private int length;
-    private int width;
     private Position gcPosition;
 
     public Position getgcPosition() {
@@ -13,9 +13,7 @@ public class GallCourt {
         this.gcPosition = gcPosition;
     }
 
-    public GallCourt(int length, int width, Position gcPosition) {
-        this.length = length;
-        this.width = width;
+    public GallCourt(Position gcPosition) {
         this.gcPosition = gcPosition;
     }
 }

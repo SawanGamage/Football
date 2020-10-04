@@ -1,8 +1,12 @@
 package backend.people;
 
-import sample.*;
+import backend.objects.*;
+import backend.shared.Position;
 
 public class Player {
+    public static final int LONG_RUN_DISTANCE = 20;
+    public static final int LONG_KICK_DISTANCE = 30;
+    public static final int TOLARENCE = 6;
     private Position playerPosition;
     private GallCourt gallCourt;
     private String name;
@@ -28,16 +32,6 @@ public class Player {
 
     public void setPlayerPosition(Position playerPosition) {
         this.playerPosition = playerPosition;
-    }
-
-    public void run() {
-
-    }
-
-    public void kick() {
-    }
-
-    public void action() {
     }
 
     public void setGround(Ground ground) {
@@ -68,32 +62,28 @@ public class Player {
         double playerBallDistance = calcDistance(this.ball.getBallPosition(), this.playerPosition);
         double targetGoalBallDistance = calcDistance(this.gallCourt.getgcPosition(), this.ball.getBallPosition());
 
-        // if ball is to far run to the ball,
-        //step1: if ball is far away than 5m, run 5m
-        //step2: if distance is less than 5m, go 4m near
         boolean isRunning = false;
         boolean longPlayerDistance = false;
         boolean longBallDistance = false;
-        if (playerBallDistance > 1) {
+        if (playerBallDistance > TOLARENCE) {
             isRunning = true;
-            if (playerBallDistance <= 4) {
+            if (playerBallDistance <= LONG_RUN_DISTANCE) {
                 longPlayerDistance = false;
                 setPlayerPosition(this.ball.getBallPosition());
             } else {
                 longPlayerDistance = true;
 
-                Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), getRandomDoubleBetweenRange(0, 4));
+                Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_RUN_DISTANCE));
                 setPlayerPosition(newPlayerPosition);
-
             }
         } else {
             isRunning = false;
-            if (targetGoalBallDistance <= 8) {
+            if (targetGoalBallDistance <= LONG_KICK_DISTANCE) {
                 longBallDistance = false;
                 ball.setBallPosition(this.gallCourt.getgcPosition());
             } else {
                 longBallDistance = true;
-                Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), getRandomDoubleBetweenRange(0, 9));
+                Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_KICK_DISTANCE));
                 ball.setBallPosition(newBallPosition);
             }
         }
