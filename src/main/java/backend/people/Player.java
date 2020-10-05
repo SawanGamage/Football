@@ -4,9 +4,11 @@ import backend.objects.*;
 import backend.shared.Position;
 
 public class Player {
-    public static final int LONG_RUN_DISTANCE = 20;
-    public static final int LONG_KICK_DISTANCE = 30;
+    public static final int LONG_RUN_DISTANCE = 40;
+    public static final int LONG_KICK_DISTANCE = 60;
     public static final int TOLARENCE = 6;
+    public static final int MIN_WEAKNESS = -50;
+    public static final int MAX_WEAKNESS = 50;
     private Position playerPosition;
     private GallCourt gallCourt;
     private String name;
@@ -16,6 +18,13 @@ public class Player {
 
     public Player(String newName) {
         this.name = newName;
+    }
+
+
+
+    public static double getRandomDoubleBetweenRange(double min, double max) {
+        double x =  Math.round((Math.random() * (max - min)) + min);
+        return  x;
     }
 
     public String getName() {
@@ -74,6 +83,7 @@ public class Player {
                 longPlayerDistance = true;
 
                 Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_RUN_DISTANCE));
+                newPlayerPosition = applyPlayerWeekness(newPlayerPosition, MIN_WEAKNESS, MAX_WEAKNESS);
                 setPlayerPosition(newPlayerPosition);
             }
         } else {
@@ -83,6 +93,7 @@ public class Player {
                 ball.setBallPosition(this.gallCourt.getgcPosition());
             } else {
                 longBallDistance = true;
+                //Calculate Ball Position
                 Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_KICK_DISTANCE));
                 ball.setBallPosition(newBallPosition);
             }
@@ -95,7 +106,14 @@ public class Player {
                         " distance to gall is " + targetGoalBallDistance);
         System.out.println(summery);
     }
-    public Position calcPosition(Position initialPosition, Position endPosition, int movement) {
+
+    private Position applyPlayerWeekness(Position position, double min, double max) {
+        double newy = position.getY() + getRandomDoubleBetweenRange(min, max);
+        position.setY(newy);
+        return position;
+    }
+
+    public Position calcPosition(Position initialPosition, Position endPosition, double movement) {
         double x1 = initialPosition.getX();
         double y1 = initialPosition.getY();
         double x3 = endPosition.getX();
@@ -107,7 +125,7 @@ public class Player {
             return new Position(newX, newY);
         }
         if (y1 == y3 && x1 < x3) {
-            double newY = y1;
+            double newY = y3;
             double newX = x1 + movement;
             return new Position(newX, newY);
         }
@@ -150,11 +168,6 @@ public class Player {
         double y2 = endPosition.getY();
         double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         return (Math.round(distance * 100.0) / 100.0);
-    }
-    public static int getRandomDoubleBetweenRange(int min, int max) {
-
-        int x = (int) Math.round ((Math.random() * ((max - min) + 1)) + min);
-        return x;
     }
 
 }

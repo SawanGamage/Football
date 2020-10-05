@@ -25,7 +25,7 @@ public class BackEndServer {
         //define goals
         GallCourt gcLeft = new GallCourt(new Position(0, groundHeight / 2));
         GallCourt gcRight = new GallCourt(new Position(groundWidth, groundHeight / 2));
-        Ball ball = new Ball( new Position(groundWidth / 2, groundHeight / 2));
+        Ball ball = new Ball( new Position(groundWidth / 2, groundHeight / 3));
 
         //define ground
         ground = new Ground(gcLeft, gcRight, ball);
@@ -33,7 +33,7 @@ public class BackEndServer {
         //blue players
         Team teamBlue = new Team();
         playerBlue = new Player("Blue");
-        playerBlue.setPlayerPosition(new Position(groundWidth / 2 - 50, groundHeight / 2));
+        playerBlue.setPlayerPosition(new Position(200, 300));
         playerBlue.setGround(ground);
         playerBlue.setBall(ball);
         playerBlue.setTeam(teamBlue);
@@ -42,7 +42,7 @@ public class BackEndServer {
         //red players
         Team teamRed = new Team();
         playerRed = new Player("Red");
-        playerRed.setPlayerPosition(new Position(groundWidth / 2 + 50, 100));
+        playerRed.setPlayerPosition(new Position(500, 70));
         playerRed.setGround(ground);
         playerRed.setBall(ball);
         playerRed.setTeam(teamRed);

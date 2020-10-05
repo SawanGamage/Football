@@ -131,7 +131,15 @@ class PlayerTest {
     @Test
     public void testRandom(){
         Player player = new Player("Kamal");
-        int x = player.getRandomDoubleBetweenRange(1,9);
+        double x = player.getRandomDoubleBetweenRange(1,9);
+        System.out.println(x);
+
+    }
+
+    @Test
+    public void testRandom2(){
+        Player player = new Player("Kamal");
+        double x = player.getRandomDoubleBetweenRange(1,9);
         System.out.println(x);
 
     }
