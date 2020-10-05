@@ -52,7 +52,7 @@ public class BackEndServer {
     public void processData() {
         //imitate that processing takes 2 seconds
         try {
-            TimeUnit.MILLISECONDS.sleep(50);
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

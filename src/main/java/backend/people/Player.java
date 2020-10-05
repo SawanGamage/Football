@@ -83,7 +83,6 @@ public class Player {
                 longPlayerDistance = true;
 
                 Position newPlayerPosition = calcPosition(this.playerPosition, this.ball.getBallPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_RUN_DISTANCE));
-                newPlayerPosition = applyPlayerWeekness(newPlayerPosition, MIN_WEAKNESS, MAX_WEAKNESS);
                 setPlayerPosition(newPlayerPosition);
             }
         } else {
@@ -95,6 +94,7 @@ public class Player {
                 longBallDistance = true;
                 //Calculate Ball Position
                 Position newBallPosition = calcPosition(this.ball.getBallPosition(), this.gallCourt.getgcPosition(), getRandomDoubleBetweenRange(TOLARENCE, LONG_KICK_DISTANCE));
+                newBallPosition = applyPlayerWeekness(newBallPosition, MIN_WEAKNESS, MAX_WEAKNESS);
                 ball.setBallPosition(newBallPosition);
             }
         }
